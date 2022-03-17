@@ -1,6 +1,6 @@
 package com.craftinginterpreters.lox;
 
-import java.io.BufferedReaders;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
@@ -11,7 +11,7 @@ import java.util.List;
 public class Lox {
     static boolean hadError = false;
 
-    public static void main(Strings[] args) throw IOException {
+    public static void main(String[] args) throws IOException {
         if (args.length > 1) {
             System.out.println("Usage: jlox [script]");
             System.exit(64);
@@ -23,7 +23,7 @@ public class Lox {
     }
 
     private static void runFile(String path) throws IOException {
-        byte[] bytes = Files.readAllBytes(Path.get(path));
+        byte[] bytes = Files.readAllBytes(Paths.get(path));
         run(new String(bytes, Charset.defaultCharset()));
 
         // Indicate an error in the exit code
@@ -32,7 +32,7 @@ public class Lox {
 
     private static void runPrompt() throws IOException {
         InputStreamReader input = new InputStreamReader(System.in);
-        BufferedReaders reader = new BufferedReaders(input);
+        BufferedReader reader = new BufferedReader(input);
 
         for(;;) {
             System.out.println("> ");
@@ -57,10 +57,9 @@ public class Lox {
         report(line, "", message);
     }
 
-    private static void report(int line, Sring where, String message) {
+    private static void report(int line, String where, String message) {
         System.err.println(
             "[line " + line + "] Error" + where + ": " + message);
-        )
         hadError = true;
     }
 }
